@@ -29,6 +29,7 @@ export default {
       } else {
         this.food.count++
       }
+      this.$emit('add', event.target)
     },
     removeCart (event) {
       if (!event._constructed) {
@@ -49,7 +50,7 @@ export default {
       display: inline-block
       padding: 6px
       opacity: 1
-      transform: translate3D(0, 0, 0)
+      transform: translate3d(0, 0, 0)
       .inner
         display: inline-block
         line-height: 24px
