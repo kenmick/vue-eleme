@@ -42,7 +42,7 @@
                   <span>¥{{food.price * food.count}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol @add="addFood" :food="food"></cartcontrol>
                 </div>
               </li>
             </ul>
@@ -168,6 +168,9 @@ export default {
           return
         }
       }
+    },
+    addFood (target) {
+      this.drop(target)
     },
     beforeDrop (el) {
       let count = this.balls.length
