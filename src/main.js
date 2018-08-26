@@ -15,7 +15,7 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-var router = new VueRouter({
+const router = new VueRouter({
   routes: [
     {path: '/goods', component: goods},
     {path: '/ratings', component: ratings},

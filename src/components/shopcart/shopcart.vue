@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="ball-container">
-        <div v-for="ball in balls">
+        <div v-for="(ball, index) in balls" :key="index">
           <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
             <div class="ball" v-show="ball.show">
               <div class="inner inner-hook"></div>
@@ -36,7 +36,7 @@
           </div>
           <div class="list-content" ref="listContent">
             <ul>
-              <li class="food" v-for="food in selectFoods">
+              <li class="food" v-for="(food, index) in selectFoods" :key="index">
                 <span class="name">{{food.name}}</span>
                 <div class="price">
                   <span>¥{{food.price * food.count}}</span>
@@ -190,7 +190,7 @@ export default {
       }
     },
     dropping (el, done) {
-      /* eslint-disable no-unsued-vars */
+      /* eslint-disable no-unused-vars */
       let rf = el.offsetHeight // trigger browser re-render
       this.$nextTick(() => {
         el.style.webkitTransform = 'translate3d(0, 0, 0)'
