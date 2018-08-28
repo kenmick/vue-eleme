@@ -29,7 +29,7 @@
         </div>
       </div>
       <transition name="fold">
-        <div class="shopcart-list" v-show="listShow">
+        <div class="shopcart-list" v-show="showList">
           <div class="list-header">
             <h1 class="title">购物车</h1>
             <span class="empty" @click="empty">清空</span>
@@ -51,7 +51,7 @@
       </transition>
     </div>
     <transition name="fade">
-      <div class="list-mask" v-show="listShow" @click="hideList"></div>
+      <div class="list-mask" v-show="showList" @click="hideList"></div>
     </transition>
   </div>
 </template>
@@ -102,7 +102,7 @@ export default {
         }
       ],
       dropBalls: [],
-      fold: true
+      showList: false
     }
   },
   computed: {
@@ -136,14 +136,19 @@ export default {
       } else {
         return 'enough'
       }
-    },
-    listShow () {
+    }
+  },
+  watch: {
+    totalCount: function () {
       if (!this.totalCount) {
-        this.fold = true
-        return false
+        this.showList = true
       }
-      let show = !this.fold
-      if (show) {
+      if (this.totalCount === 0) {
+        this.showList = false
+      }
+    },
+    showList: function () {
+      if (this.showList) {
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$refs.listContent, {
@@ -154,7 +159,6 @@ export default {
           }
         })
       }
-      return show
     }
   },
   methods: {
@@ -212,7 +216,7 @@ export default {
       if (!this.totalCount) {
         return
       }
-      this.fold = !this.fold
+      this.showList = !this.showList
     },
     empty () {
       this.selectFoods.forEach((food) => {
@@ -220,7 +224,7 @@ export default {
       })
     },
     hideList () {
-      this.fold = true
+      this.showList = false
     },
     pay () {
       if (this.totalPrice < this.minPrice) {
